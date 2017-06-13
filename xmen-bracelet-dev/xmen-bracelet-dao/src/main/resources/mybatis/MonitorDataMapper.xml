@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doshr.xmen.backend.dao.mapper.MonitorDataMapper">
+
+	<resultMap id="monitorDataMap" type="com.doshr.xmen.backend.dao.po.MonitorDataPO">
+		<result column="ID" 			property="id" />
+		<result column="CLASS_ID" 		property="classId" />
+		<result column="STUDENT_ID" 	property="studentId" />
+		<result column="TIME_STAMP" 	property="timeStamp" />
+		<result column="SUB_TYPE" 		property="subType" />
+		<result column="TYPE" 			property="type" />
+		<result column="NUM" 			property="num" />
+		<result column="UUID" 			property="uuid" />
+		<result column="CREATE_TIME" 	property="createTime" />
+	</resultMap>
+     <!-- 根据客户Id查找客户信息 -->
+	<select id="getMonitorData" resultMap="monitorDataMap">
+		select * from monitor_data where STUDENT_ID=#{studentId} and CLASS_ID=#{classId} group by TYPE order by TIME_STAMP desc
+	</select>
+	
+	<select id="getMonitorDataByUUID" resultMap="monitorDataMap">
+		select * from monitor_data where UUID=#{uuid}
+	</select>
+
+	<insert id="insertMonitorData" useGeneratedKeys="true" keyProperty="id" parameterType="com.doshr.xmen.backend.dao.po.MonitorDataPO">  
+	    insert into monitor_data(CLASS_ID,STUDENT_ID,TIME_STAMP,SUB_TYPE,TYPE,NUM,UUID,CREATE_TIME) values(#{classId},#{studentId},#{timeStamp},#{subType},#{type},#{num},#{uuid},now())
+	</insert>  
+	
+</mapper>

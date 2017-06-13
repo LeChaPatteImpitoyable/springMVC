@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doshr.xmen.backend.dao.mapper.StudentMapper">
+
+	<resultMap id="studentMap" type="com.doshr.xmen.backend.dao.po.StudentPO">
+		<result column="ID" 			property="id" />
+		<result column="STUDENT_NO" 	property="studentNO" />
+		<result column="NAME" 			property="name" />
+		<result column="SEX" 			property="sex" />
+		<result column="AGE" 			property="age" />
+		<result column="STATURE" 		property="stature" />
+		<result column="WEIGHT" 		property="weight" />
+		<result column="CREATE_TIME" 	property="createTime" />
+		<result column="MODIFY_TIME" 	property="modifyTime" />
+		<result column="IS_DELETE" 		property="isDelete" />
+	</resultMap>
+	
+	<update id="updateStudentName">
+	  	update student set NAME=#{name},MODIFY_TIME=now() where id=#{studentId}
+	</update>
+	
+	<update id="updateStudent">
+	  	update student set NAME=#{name},SEX=#{sex},AGE=#{age},STATURE=#{stature},WEIGHT=#{weight},MODIFY_TIME=now() 
+	  	where id=#{id}
+	</update>
+	
+	<select id="getStudentByNO" resultMap="studentMap">
+		select * from student where STUDENT_NO=#{studentNO} and IS_DELETE=0
+	</select>
+	
+	<select id="getStudentById" resultMap="studentMap">
+		select * from student where ID=#{studentId} and IS_DELETE=0
+	</select>
+
+	<insert id="insertStudent" useGeneratedKeys="true" keyProperty="id" parameterType="com.doshr.xmen.backend.dao.po.StudentPO">  
+	    insert into student(STUDENT_NO,NAME,SEX,AGE,STATURE,WEIGHT,CREATE_TIME, MODIFY_TIME) 
+	    values(#{studentNO},#{name},#{sex},#{age},#{stature},#{weight},now(),now())
+	</insert>
+	
+</mapper>

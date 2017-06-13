@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doshr.xmen.backend.dao.mapper.RelationMapper">
+
+	<resultMap id="relationMap" type="com.doshr.xmen.backend.dao.po.RelationPO">
+		<result column="ID" 			property="id" />
+		<result column="CLASS_ID" 		property="classId" />
+		<result column="STUDENT_ID" 	property="studentId" />
+		<result column="BRACELET_NO" 	property="braceletNO" />
+		<result column="STATUS" 		property="status" />
+		<result column="CREATE_TIME" 	property="createTime" />
+		<result column="MODIFY_TIME" 	property="modifyTime" />
+		<result column="IS_DELETE" 		property="isDelete" />
+	</resultMap>
+	
+	<update id="unboundBracelet">
+	  	update sd_relation set STATUS=0,MODIFY_TIME=now() where id=#{id}
+	</update>
+	
+	<update id="boundBracelet">
+	  	update sd_relation set STATUS=1,MODIFY_TIME=now() where id=#{id}
+	</update>
+	
+	<update id="updateRelation">
+	  	update sd_relation set BRACELET_NO=#{braceletNO},CLASS_ID=#{classId},MODIFY_TIME=now() where id=#{id}
+	</update>
+	
+	<select id="getRelationById" resultMap="relationMap">
+		select * from sd_relation where ID=#{id} and IS_DELETE=0
+	</select>
+	
+	<select id="getRelation" resultMap="relationMap">
+		select * from sd_relation where CLASS_ID=#{classId} and STUDENT_ID=#{studentId} and IS_DELETE=0
+	</select>
+	
+	<select id="getRelationByBraceletNO" resultMap="relationMap">
+		select * from sd_relation where BRACELET_NO=#{braceletNO} and STATUS=1 and IS_DELETE=0
+	</select>
+	
+	<select id="getRelationByClassId" resultMap="relationMap">
+		select * from sd_relation where CLASS_ID=#{classId} and IS_DELETE=0 order by STUDENT_ID
+	</select>
+
+	<insert id="insertRelation" useGeneratedKeys="true" keyProperty="id" parameterType="com.doshr.xmen.backend.dao.po.RelationPO">  
+	    insert into sd_relation(CLASS_ID,STUDENT_ID,BRACELET_NO,STATUS,CREATE_TIME, MODIFY_TIME) values(#{classId},#{studentId},#{braceletNO},#{status},now(),now())
+	</insert>  
+	
+</mapper>

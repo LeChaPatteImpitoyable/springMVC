@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doshr.xmen.backend.dao.mapper.DeviceMapper">
+
+	<resultMap id="deviceMap" type="com.doshr.xmen.backend.dao.po.DevicePO">
+		<result column="ID" 			property="id" />
+		<result column="BRACELET_NO" 	property="braceletNO" />
+		<result column="RFID" 			property="rfid" />
+		<result column="MAC" 			property="mac" />
+		<result column="CREATE_TIME" 	property="createTime" />
+		<result column="MODIFY_TIME" 	property="modifyTime" />
+		<result column="IS_DELETE" 		property="isDelete" />
+	</resultMap>
+	<select id="getDeviceByBraceletNO" resultMap="deviceMap">
+		select * from device where BRACELET_NO=#{braceletNO} and IS_DELETE=0
+	</select>
+	
+	<select id="getDeviceByAll" resultMap="deviceMap">
+		select * from device where (BRACELET_NO=#{braceletNO} or RFID=#{rfid} or MAC=#{mac}) and IS_DELETE=0
+	</select>
+
+	<insert id="insertDevice" useGeneratedKeys="true" keyProperty="id" parameterType="com.doshr.xmen.backend.dao.po.DevicePO">  
+	    insert into device(BRACELET_NO,RFID,MAC,CREATE_TIME, MODIFY_TIME) values(#{braceletNO},#{rfid},#{mac},now(),now())
+	</insert>  
+	
+</mapper>

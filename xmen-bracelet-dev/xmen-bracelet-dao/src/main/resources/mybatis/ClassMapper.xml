@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doshr.xmen.backend.dao.mapper.ClassMapper">
+
+	<resultMap id="classMap" type="com.doshr.xmen.backend.dao.po.ClassPO">
+		<result column="ID" property="id" />
+		<result column="NAME" property="name" />
+		<result column="GRADE" property="grade" />
+		<result column="CLAS" property="clas" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="MODIFY_TIME" property="modifyTime" />
+		<result column="IS_DELETE" property="isDelete" />
+	</resultMap>
+	<select id="getClassById" resultMap="classMap">
+		select * from class where
+		ID=#{classId} and IS_DELETE=0
+	</select>
+
+	<select id="getClassByClaAndGrade" resultMap="classMap">
+		select * from class
+		where CLAS=#{clas} and GRADE=#{grade} and IS_DELETE=0
+	</select>
+
+	<select id="getAllClassByGrade" resultMap="classMap">
+		select * from class
+		where GRADE=#{grade} and IS_DELETE=0
+	</select>
+
+	<select id="getClassByName" resultMap="classMap">
+		select * from class
+		where NAME=#{name} and IS_DELETE=0
+	</select>
+	
+	<select id="getAllClass" resultMap="classMap">
+		select * from class
+		where IS_DELETE=0
+	</select>
+
+	<select id="getAllGrade" resultType="java.lang.Integer">
+		select distinct GRADE from
+		class
+	</select>
+
+	<insert id="insertClass" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.doshr.xmen.backend.dao.po.ClassPO">
+		insert into class(NAME,GRADE,CLAS,CREATE_TIME, MODIFY_TIME)
+		values(#{name},#{grade},#{clas},now(),now())
+	</insert>
+
+</mapper>
