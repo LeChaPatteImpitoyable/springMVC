@@ -50,17 +50,4 @@ public class MyTest extends BaseTest{
 		System.out.println(XmenUtils.checkBraceletNO("An0000"));
 	}
 	
-	@Test  
-	public void test4() {  
-	    File imageFile = new File("/home/ying/getVerifyCode.jpg");  
-	       Tesseract tessreact = new Tesseract();  
-	       tessreact.setDatapath("/home/ying/tesseract/tesseract");  
-	       try {  
-	    	   System.out.println(imageFile.isFile());
-	           String result = tessreact.doOCR(imageFile);  
-	           System.out.println(result);  
-	       } catch (TesseractException e) {  
-	           System.err.println(e.getMessage());  
-	       }  
-	} 
 }
