@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ying.dao.mapper.CustomerMapper">
+
+	<resultMap id="customerMap" type="com.ying.dao.po.CustomerPO">
+		<result column="ID" property="id" />
+		<result column="USERNAME" property="userName" />
+		<result column="PASSWORD" property="password" />
+		<result column="HEADERPATH" property="headerPath" />
+		<result column="MOBILE" property="mobile" />
+		<result column="SEX" property="sex" />
+		<result column="AGE" property="age" />
+		<result column="INTRODUCE" property="introduce" />
+		<result column="REGISTERDATATIME" property="registerDatatime" />
+		<result column="TOKEN" property="token" />
+		<result column="LOGINDATATIME" property="loginDatatime" />
+		<result column="CUSTOMERTYPE" property="customerType" />
+		<result column="BLACKLIST" property="blacklist" />
+		<result column="IDSTATUS" property="idStatus" />
+		<result column="DEVICETOKEN" property="deviceToken" />
+		<result column="POINT" property="point" />
+		<result column="TYPE" property="type"/>
+		<result column="OPEN_ID" property="openId"/>
+	</resultMap>
+     <!-- 根据客户Id查找客户信息 -->
+	<select id="getCustomerDetail" resultMap="customerMap">
+		select * from customer
+		where ID=#{cid}
+	</select>
+
+	<select id="getCustomerByPwd" resultMap="customerMap">
+		select * from customer where mobile=#{mobile} and password=#{password}
+	</select>
+
+	<select id="getCustomerByDeviceToken" resultMap="customerMap">
+		select * from customer  where devicetoken=#{0}
+	</select>
+
+	<select id="getCustomersExtend" resultMap="customerMap">
+		select * from customer where ID in
+		<foreach collection="cids" item="cid" index="index" open="("
+			separator="," close=")">
+			#{cid}
+		</foreach>
+	</select>
+
+	<select id="getCustomerByPhone" resultMap="customerMap" 	parameterType="java.lang.String">
+		select * from customer where mobile=#{mobile}
+	</select>
+	
+	<insert id="insertCustomer" useGeneratedKeys="true" keyProperty="id" parameterType="com.ying.dao.po.CustomerPO">  
+	    insert into customer(password,mobile,username,token, customertype,idstatus,registerdatatime,headerpath,type,open_id) values(#{password},#{mobile},#{userName},#{token},#{customerType},#{idStatus},#{registerDatatime},#{headerPath},#{type},#{openId})
+	</insert>  
+
+	<update id="clearDeviceToken">
+		update customer set devicetoken = null where devicetoken=#{deviceToken}
+	</update>
+	
+	<update id="updateDeviceToken">
+		update customer set devicetoken = #{deviceToken} where mobile = #{mobile}
+	</update>
+	
+	<update id="updateRecommendIds">
+		update customer set recommendIds=#{recommendIds}  where id=#{id}
+	</update>
+
+	<update id="updateCustomer" parameterType="com.ying.dao.po.CustomerPO">
+		update customer 
+		<trim prefix="set" suffixOverrides=",">
+			  <if test="null!=password and ''!=password">
+					<![CDATA[		password=#{password}, ]]>
+			 </if>
+			 <if test="null!=deviceToken and ''!=deviceToken">
+					<![CDATA[	 devicetoken=#{deviceToken}, ]]>
+			 </if>
+			 <if test="null!=age and ''!=age">
+			 		<![CDATA[	 age=#{age}, ]]>
+			 </if>
+			  <if test="null!=sex and ''!=sex">
+			 		<![CDATA[	 sex=#{sex}, ]]>
+			 </if>
+			 <if test="null!=userName and ''!=userName">
+			 		<![CDATA[	 username=#{userName}, ]]>
+			 </if>
+			  <if test="null!=headerPath and ''!=headerPath">
+			 		<![CDATA[	 headerpath=#{headerPath}, ]]>
+			 </if>
+			 <if test="null!=token and ''!=token">
+					<![CDATA[	 token=#{token}, ]]>
+			 </if>
+			 <if test="null!=openId and ''!=openId">
+			 		<![CDATA[	 open_id=#{openId}, ]]>
+			 </if>
+		</trim>
+		 where id=#{id}
+	</update>
+	
+	
+	<select id="getAllCustomerHeaderInfos" resultMap="customerMap">
+		select id,username,mobile,headerpath from customer
+	</select>
+	
+	<select id="getAllCustomer" resultMap="customerMap">
+		select id,username,mobile from customer
+	</select>
+	
+	<update id="updateCustomerStatus">
+		update customer set idstatus =#{status}  where id =#{customerId}
+	</update>
+	
+	<select id="getFrozenCustomerList" resultMap="customerMap">
+	  select * from customer where idstatus=1  limit #{offset},#{length}
+	</select>
+	
+	<update id="updateBlackListById">
+		update customer set BLACKLIST=#{blackList}  where id =#{customerId}
+	</update>
+	
+	<select id="selectCustomer" resultMap="customerMap" >
+		select * from customer order by id asc limit #{offset},#{length}
+	</select>
+	
+	<select id="getAccountByOpenId" resultMap="customerMap">
+		select * from customer
+		where OPEN_ID=#{openId}
+	</select>
+	
+	<update id="clearWechatOpenId">
+		update customer set open_id = NULL where <![CDATA[mobile <> #{mobile}]]> and open_id = #{openId}
+	</update>
+	
+	<update id="bindWechat">
+		update customer set open_id = #{openId} where mobile = #{mobile}
+	</update>
+	<select id="getAllAccountNumber" resultType="java.math.BigDecimal" >
+		select count(*) from customer
+	</select>
+</mapper>
