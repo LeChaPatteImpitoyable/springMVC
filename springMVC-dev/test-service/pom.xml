@@ -53,20 +53,20 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- jsp jstl -->
-		<dependency>  
-          <groupId>javax.servlet.jsp</groupId>  
-          <artifactId>jsp-api</artifactId>  
-          <version>2.1</version>  
-          <scope>provided</scope>  
-        </dependency>  
-        
-       <dependency>  
-          <groupId>javax.servlet</groupId>  
-          <artifactId>jstl</artifactId>  
-          <version>1.2</version>  
-       </dependency>  
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
 
 		<!-- spring -->
 		<dependency>
@@ -256,22 +256,53 @@
 			<version>2.0</version>
 		</dependency>
 		<!-- 验证码识别 -->
-		<dependency>  
-    		<groupId>net.java.dev.jna</groupId>  
-    		<artifactId>jna</artifactId>  
-    		<version>4.2.1</version>  
-		</dependency> 
-		<dependency>  
-    <groupId>net.sourceforge.tess4j</groupId>  
-    <artifactId>tess4j</artifactId>  
-    <version>2.0.1</version>  
-    <exclusions>  
-        <exclusion>  
-            <groupId>com.sun.jna</groupId>  
-            <artifactId>jna</artifactId>  
-        </exclusion>  
-    </exclusions>  
-</dependency>
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>4.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.tess4j</groupId>
+			<artifactId>tess4j</artifactId>
+			<version>2.0.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.sun.jna</groupId>
+					<artifactId>jna</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+				<!-- java解析csv -->
+		<dependency>
+			<groupId>net.sourceforge.javacsv</groupId>
+			<artifactId>javacsv</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6.12</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jxls</groupId>
+			<artifactId>jxls-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jxls</groupId>
+			<artifactId>jxls</artifactId>
+			<version>2.2.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jxls</groupId>
+			<artifactId>jxls-poi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com</groupId>
+			<artifactId>jxcell</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<finalName>test-service</finalName>

@@ -1,7 +1,5 @@
 package com.ying.test;
 
-import java.io.File;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.slf4j.Logger;
@@ -11,9 +9,6 @@ import com.alibaba.fastjson.JSON;
 import com.ying.client.account.dto.AccountDTO;
 import com.ying.common.util.XmenUtils;
 import com.ying.services.customer.ICustomerService;
-
-import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
 
 
 public class MyTest extends BaseTest{
