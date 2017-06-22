@@ -74,9 +74,5 @@
 			<groupId>net.sf.jxls</groupId>
 			<artifactId>jxls-core</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.jxls</groupId>
-			<artifactId>jxls-poi</artifactId>
-		</dependency>
 	</dependencies>
 </project>

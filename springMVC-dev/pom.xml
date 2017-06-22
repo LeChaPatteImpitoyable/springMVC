@@ -430,9 +430,19 @@
 				<version>1.0.5</version>
 			</dependency>
 			<dependency>
-				<groupId>org.jxls</groupId>
-				<artifactId>jxls-poi</artifactId>
-				<version>1.0.6</version>
+				<groupId>com</groupId>
+				<artifactId>jxcell</artifactId>
+				<version>2.3.0</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sourceforge.javacsv</groupId>
+				<artifactId>javacsv</artifactId>
+				<version>2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sourceforge.jexcelapi</groupId>
+				<artifactId>jxl</artifactId>
+				<version>2.6.12</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

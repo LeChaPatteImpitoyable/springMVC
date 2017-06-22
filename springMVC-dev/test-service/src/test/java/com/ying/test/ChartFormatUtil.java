@@ -6,7 +6,7 @@ import com.jxcell.*;
 
 public class ChartFormatUtil {
 
-	public static void init()
+	public static void getExcel(String outPath)
     {
 
         View m_view = new View();
@@ -172,7 +172,7 @@ public class ChartFormatUtil {
 
 
             //excel写出路径
-            m_view.write("/home/ying/data/out.xls");
+            m_view.write(outPath);
             System.out.println("end");
         }
         catch (Exception e) {

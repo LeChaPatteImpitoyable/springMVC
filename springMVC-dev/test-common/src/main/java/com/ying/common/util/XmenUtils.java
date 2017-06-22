@@ -70,6 +70,8 @@ import com.ying.client.base.RespCode;
 import com.ying.common.Constants;
 import com.ying.common.exception.BackendException;
 
+import net.sf.jxls.transformer.XLSTransformer;
+
 public class XmenUtils {
 
 	private static final Logger LOG = LoggerFactory.getLogger(XmenUtils.class);
@@ -104,8 +106,7 @@ public class XmenUtils {
 
 	public static final DateFormat TIME_DISPLAY = new SimpleDateFormat(TIME_FORMAT);
 
-	// private static final DateFormat DATE_DISPLAY = new
-	// SimpleDateFormat(DATE_FORMAT);
+	private static final DateFormat DATE_DISPLAY = new SimpleDateFormat(DATE_FORMAT);
 
 	public static final DateFormat NOSPID_DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT_NOSPID);
 
@@ -411,6 +412,11 @@ public class XmenUtils {
 	public static String getTime() {
 		Calendar cale = Calendar.getInstance();
 		return TIME_DISPLAY.format(cale.getTime());
+	}
+	
+	public static String getDate() {
+		Calendar cale = Calendar.getInstance();
+		return DATE_DISPLAY.format(cale.getTime());
 	}
 
 	/*
@@ -2047,7 +2053,7 @@ public class XmenUtils {
 	public static boolean checkBraceletNO(String braceletNO) {
 		return Pattern.matches(BRACELET_NUMBER, braceletNO);
 	}
-	
+
 	public static double stringToDouble(String data, int scale) {
 		if (StringUtils.isEmpty(data)) {
 			return 0.0;
@@ -2121,138 +2127,155 @@ public class XmenUtils {
 		}
 		return weeks[week_index];
 	}
-	
+
 	public static Date stringToDate(String dateString) {
 		try {
 			return NOSPID_DATE_FORMAT.parse(dateString);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
 	public static Date stringToDateTime(String date, DateFormat format) {
 		try {
 			return format.parse(date);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * 读取Excel表格的内容
+	 * 
 	 * @param file
 	 * @return
 	 */
-	public static List<Map<Integer,String>> readExcelContent(File file){	
+	public static List<Map<Integer, String>> readExcelContent(File file) {
 		Workbook wb = null;
-		 try{
-			 wb = new XSSFWorkbook(new FileInputStream(file));
-		 }catch(Exception ex){
-			 try {
+		try {
+			wb = new XSSFWorkbook(new FileInputStream(file));
+		} catch (Exception ex) {
+			try {
 				wb = new HSSFWorkbook(new FileInputStream(file));
-			} catch(FileNotFoundException e) {
+			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch(IOException e) {
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		 }
-	  	 List<Map<Integer,String>> maps = new ArrayList<Map<Integer,String>>();
-			//循环工作表
-			for(int i = 0; i< wb.getNumberOfSheets();i++){
-				Sheet sheet = wb.getSheetAt(i);
-				if(sheet == null){
-					continue;
-				}
-				// 循环行Row
-				for(int j = 1;j<=sheet.getLastRowNum();j++){
-					Row row = sheet.getRow(j);
-					Map<Integer,String> map = new HashMap<Integer,String>();
-					for(int k=0;k<row.getLastCellNum();k++){
-						Cell cell = row.getCell(k);
-						int type = cell.getCellType();
-						String value = "";
-						if(type == HSSFCell.CELL_TYPE_NUMERIC){
-							DecimalFormat df = new DecimalFormat("#");
-							String number = df.format(cell.getNumericCellValue());
-							value +=number;
-						}else if(type == HSSFCell.CELL_TYPE_BOOLEAN ){
-							//返回布尔类型
-							boolean bool = cell.getBooleanCellValue();
-							value += bool;
-						} else if(type == HSSFCell.CELL_TYPE_STRING){
-							//返回字符串类型
-							String str = cell.getRichStringCellValue().getString();
-							value += str;
-						}
-						map.put(k, value);
+		}
+		List<Map<Integer, String>> maps = new ArrayList<Map<Integer, String>>();
+		// 循环工作表
+		for (int i = 0; i < wb.getNumberOfSheets(); i++) {
+			Sheet sheet = wb.getSheetAt(i);
+			if (sheet == null) {
+				continue;
+			}
+			// 循环行Row
+			for (int j = 1; j <= sheet.getLastRowNum(); j++) {
+				Row row = sheet.getRow(j);
+				Map<Integer, String> map = new HashMap<Integer, String>();
+				for (int k = 0; k < row.getLastCellNum(); k++) {
+					Cell cell = row.getCell(k);
+					int type = cell.getCellType();
+					String value = "";
+					if (type == HSSFCell.CELL_TYPE_NUMERIC) {
+						DecimalFormat df = new DecimalFormat("#");
+						String number = df.format(cell.getNumericCellValue());
+						value += number;
+					} else if (type == HSSFCell.CELL_TYPE_BOOLEAN) {
+						// 返回布尔类型
+						boolean bool = cell.getBooleanCellValue();
+						value += bool;
+					} else if (type == HSSFCell.CELL_TYPE_STRING) {
+						// 返回字符串类型
+						String str = cell.getRichStringCellValue().getString();
+						value += str;
 					}
-					maps.add(map);
+					map.put(k, value);
 				}
+				maps.add(map);
 			}
-			
-			return maps;
+		}
+
+		return maps;
 	}
-	
+
 	/**
 	 * 获取各个年龄段的标准身高 体重
+	 * 
 	 * @param age
 	 * @param sex
 	 * @return
 	 */
-	public static Map<String,String>  getStandardStatureAndWeightByAge(int age,String sex){
-		
+	public static Map<String, String> getStandardStatureAndWeightByAge(int age, String sex) {
+
 		Map<String, String> map = new HashMap<String, String>();
-		if((age > 0) && (age < 3)){
+		if ((age > 0) && (age < 3)) {
 			map.put("stature", "76.5");
 			map.put("weight", "10");
 		}
-		if(sex.equals("男")){
-			if((age >=3) && (age < 6)){
+		if (sex.equals("男")) {
+			if ((age >= 3) && (age < 6)) {
 				map.put("stature", "110");
 				map.put("weight", "17");
-			}else if((age >= 6) && (age < 9)){
+			} else if ((age >= 6) && (age < 9)) {
 				map.put("stature", "132");
 				map.put("weight", "25");
-			}else if((age >= 9) && (age < 12)){
+			} else if ((age >= 9) && (age < 12)) {
 				map.put("stature", "145");
 				map.put("weight", "37");
-			}else if((age >= 12) && (age < 16)){
+			} else if ((age >= 12) && (age < 16)) {
 				map.put("stature", "168");
 				map.put("weight", "55");
-			}else{
+			} else {
 				map.put("stature", "175");
 				map.put("weight", "60");
 			}
-		}else if(sex.equals("女")){//女
-			if((age >=3) && (age < 6)){
+		} else if (sex.equals("女")) {// 女
+			if ((age >= 3) && (age < 6)) {
 				map.put("stature", "106");
 				map.put("weight", "17");
-			}else if((age >= 6) && (age < 9)){
+			} else if ((age >= 6) && (age < 9)) {
 				map.put("stature", "128");
 				map.put("weight", "23");
-			}else if((age >= 9) && (age < 12)){
+			} else if ((age >= 9) && (age < 12)) {
 				map.put("stature", "143");
 				map.put("weight", "34");
-			}else if((age >= 12) && (age < 16)){
+			} else if ((age >= 12) && (age < 16)) {
 				map.put("stature", "158");
 				map.put("weight", "42");
-			}else{
+			} else {
 				map.put("stature", "168");
 				map.put("weight", "50");
 			}
 		}
-		
+
 		return map;
-     
+
+	}
+
+	public static void checkRespStatus(BaseResponse resp) {
+		if (!RespCode.RESP_OK.getCode().equals(resp.getRespStatus().getCode())) {
+			throw new RuntimeException(resp.getRespStatus().getCode());
+		}
 	}
 	
-	
-	
-	 public static void  checkRespStatus(BaseResponse resp){
-	        if (!RespCode.RESP_OK.getCode().equals(resp.getRespStatus().getCode())) {
-	            throw new RuntimeException(resp.getRespStatus().getCode());
-	        }  
-	    }
+	public static void createExcel(String srcFilePath, List<?> list, String destFilePath){
+		try { 
+			XLSTransformer transformer = new XLSTransformer();
+			
+//			URL url = this.getClass().getClassLoader().getResource("");
+			
+//			String srcFilePath = url.getPath() + templateFileName;
+			Map<String,Object> map = new HashMap<String,Object>(); 
+			map.put("list", list);
+//			String destFilePath = url.getPath() + resultFileName;
+			
+			transformer.transformXLS(srcFilePath, map, destFilePath);
+		} catch (Exception e) {
+			throw new RuntimeException("error happens...", e);
+		}
+	}
 }
