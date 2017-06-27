@@ -1,32 +1,33 @@
 package com.ying.dao.po;
 
+import java.util.Date;
+
 public class CustomerPO {
 
 	private int id;
 	private String userName;
 	private String password;
 	private String headerPath;
-	private String mobile;
+	private String loginAccount;
 	private String sex;
-	private String age; // birthday[string type, need modify]
-	private String introduce;
-	// private String friendIds;
-	// private String fansIds;
-	private String registerDatatime;
+	private String age;
+	private Date createTime;
+	private Date modifyTime;
 	private String token;
-	private String loginDatatime;
-	// private String nicePostId;
-	private String customerType;
-	private String blacklist;
-	private String idStatus;
+	private Date loginDatatime;
+	private int status;
 	private String deviceToken;
-	private String point;
-
-	private int type;// 0用户 1会员
-
-	private int isdelete;// 是否删除
-	
+	private int roleNum;
+	private int isDelete;// 是否删除
 	private String openId;//微信公众号中获取到的id
+
+	public int getRoleNum() {
+		return roleNum;
+	}
+
+	public void setRoleNum(int roleNum) {
+		this.roleNum = roleNum;
+	}
 
 	public String getOpenId() {
 		return openId;
@@ -68,14 +69,6 @@ public class CustomerPO {
 		this.headerPath = headerPath;
 	}
 
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
 	public String getSex() {
 		return sex;
 	}
@@ -92,42 +85,6 @@ public class CustomerPO {
 		this.age = age;
 	}
 
-	public String getIntroduce() {
-		return introduce;
-	}
-
-	public void setIntroduce(String introduce) {
-		this.introduce = introduce;
-	}
-
-	// public String getFriendIds ( )
-	// {
-	// return friendIds;
-	// }
-	//
-	// public void setFriendIds ( String friendIds )
-	// {
-	// this.friendIds = friendIds;
-	// }
-	//
-	// public String getFansIds ( )
-	// {
-	// return fansIds;
-	// }
-	//
-	// public void setFansIds ( String fansIds )
-	// {
-	// this.fansIds = fansIds;
-	// }
-
-	public String getRegisterDatatime() {
-		return registerDatatime;
-	}
-
-	public void setRegisterDatatime(String registerDatatime) {
-		this.registerDatatime = registerDatatime;
-	}
-
 	public String getToken() {
 		return token;
 	}
@@ -136,46 +93,44 @@ public class CustomerPO {
 		this.token = token;
 	}
 
-	public String getLoginDatatime() {
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
+	public Date getLoginDatatime() {
 		return loginDatatime;
 	}
 
-	public void setLoginDatatime(String loginDatatime) {
+	public void setLoginDatatime(Date loginDatatime) {
 		this.loginDatatime = loginDatatime;
 	}
 
-	// public String getNicePostId ( )
-	// {
-	// return nicePostId;
-	// }
-	//
-	// public void setNicePostId ( String nicePostId )
-	// {
-	// this.nicePostId = nicePostId;
-	// }
-
-	public String getCustomerType() {
-		return customerType;
+	public String getLoginAccount() {
+		return loginAccount;
 	}
 
-	public void setCustomerType(String customerType) {
-		this.customerType = customerType;
+	public void setLoginAccount(String loginAccount) {
+		this.loginAccount = loginAccount;
 	}
 
-	public String getBlacklist() {
-		return blacklist;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setBlacklist(String blacklist) {
-		this.blacklist = blacklist;
-	}
-
-	public String getIdStatus() {
-		return idStatus;
-	}
-
-	public void setIdStatus(String idStatus) {
-		this.idStatus = idStatus;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public String getDeviceToken() {
@@ -185,29 +140,11 @@ public class CustomerPO {
 	public void setDeviceToken(String deviceToken) {
 		this.deviceToken = deviceToken;
 	}
-
-	public String getPoint() {
-		return point;
+	public int getIsDelete() {
+		return isDelete;
 	}
 
-	public void setPoint(String point) {
-		this.point = point;
+	public void setIsDelete(int isDelete) {
+		this.isDelete = isDelete;
 	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
-
-	public int getIsdelete() {
-		return isdelete;
-	}
-
-	public void setIsdelete(int isdelete) {
-		this.isdelete = isdelete;
-	}
-
 }

@@ -8,21 +8,24 @@
 		<result column="USERNAME" property="userName" />
 		<result column="PASSWORD" property="password" />
 		<result column="HEADERPATH" property="headerPath" />
-		<result column="MOBILE" property="mobile" />
+		<result column="LOGIN_ACCOUNT" property="loginAccount" />
 		<result column="SEX" property="sex" />
 		<result column="AGE" property="age" />
-		<result column="INTRODUCE" property="introduce" />
-		<result column="REGISTERDATATIME" property="registerDatatime" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="MODIFY_TIME" property="modifyTime" />
 		<result column="TOKEN" property="token" />
 		<result column="LOGINDATATIME" property="loginDatatime" />
-		<result column="CUSTOMERTYPE" property="customerType" />
-		<result column="BLACKLIST" property="blacklist" />
-		<result column="IDSTATUS" property="idStatus" />
+		<result column="STATUS" property="status" />
 		<result column="DEVICETOKEN" property="deviceToken" />
-		<result column="POINT" property="point" />
-		<result column="TYPE" property="type"/>
+		<result column="ROLE_NUM" property="roleNum"/>
 		<result column="OPEN_ID" property="openId"/>
+		<result column="IS_DELETE" property="isDelete"/>
 	</resultMap>
+	
+	<insert id="insertCustomer" useGeneratedKeys="true" keyProperty="id" parameterType="com.ying.dao.po.CustomerPO">  
+	    insert into customer(password,login_account,username,token,status,create_time,modify_time,headerpath,role_num,open_id) values(#{password},#{loginAccount},#{userName},#{token},#{status},now(),now(),#{headerPath},#{roleNum},#{openId})
+	</insert>
+	
      <!-- 根据客户Id查找客户信息 -->
 	<select id="getCustomerDetail" resultMap="customerMap">
 		select * from customer
@@ -30,7 +33,7 @@
 	</select>
 
 	<select id="getCustomerByPwd" resultMap="customerMap">
-		select * from customer where mobile=#{mobile} and password=#{password}
+		select * from customer where LOGIN_ACCOUNT=#{loginAccount} and password=#{password}
 	</select>
 
 	<select id="getCustomerByDeviceToken" resultMap="customerMap">
@@ -45,20 +48,16 @@
 		</foreach>
 	</select>
 
-	<select id="getCustomerByPhone" resultMap="customerMap" 	parameterType="java.lang.String">
-		select * from customer where mobile=#{mobile}
-	</select>
-	
-	<insert id="insertCustomer" useGeneratedKeys="true" keyProperty="id" parameterType="com.ying.dao.po.CustomerPO">  
-	    insert into customer(password,mobile,username,token, customertype,idstatus,registerdatatime,headerpath,type,open_id) values(#{password},#{mobile},#{userName},#{token},#{customerType},#{idStatus},#{registerDatatime},#{headerPath},#{type},#{openId})
-	</insert>  
+	<select id="getCustomerByPhone" resultMap="customerMap" parameterType="java.lang.String">
+		select * from customer where LOGIN_ACCOUNT=#{loginAccount}
+	</select>  
 
 	<update id="clearDeviceToken">
 		update customer set devicetoken = null where devicetoken=#{deviceToken}
 	</update>
 	
 	<update id="updateDeviceToken">
-		update customer set devicetoken = #{deviceToken} where mobile = #{mobile}
+		update customer set devicetoken = #{deviceToken} where LOGIN_ACCOUNT = #{loginAccount}
 	</update>
 	
 	<update id="updateRecommendIds">
@@ -98,11 +97,11 @@
 	
 	
 	<select id="getAllCustomerHeaderInfos" resultMap="customerMap">
-		select id,username,mobile,headerpath from customer
+		select id,username,login_account,headerpath from customer
 	</select>
 	
 	<select id="getAllCustomer" resultMap="customerMap">
-		select id,username,mobile from customer
+		select id,username,login_account from customer
 	</select>
 	
 	<update id="updateCustomerStatus">
@@ -127,11 +126,11 @@
 	</select>
 	
 	<update id="clearWechatOpenId">
-		update customer set open_id = NULL where <![CDATA[mobile <> #{mobile}]]> and open_id = #{openId}
+		update customer set open_id = NULL where <![CDATA[login_account <> #{loginAccount}]]> and open_id = #{openId}
 	</update>
 	
 	<update id="bindWechat">
-		update customer set open_id = #{openId} where mobile = #{mobile}
+		update customer set open_id = #{openId} where login_account = #{loginAccount}
 	</update>
 	<select id="getAllAccountNumber" resultType="java.math.BigDecimal" >
 		select count(*) from customer

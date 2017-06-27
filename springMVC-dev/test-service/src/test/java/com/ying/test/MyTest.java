@@ -21,7 +21,7 @@ public class MyTest extends BaseTest{
 	@Test
 	public void test(){
 		AccountDTO u = customerService.getCustomer(1);
-		System.out.println(u.getMobile());
+		System.out.println(u.getAccount());
 		LOG.info(u.getUserName());
 		System.out.println(JSON.toJSONString(u));
 	}

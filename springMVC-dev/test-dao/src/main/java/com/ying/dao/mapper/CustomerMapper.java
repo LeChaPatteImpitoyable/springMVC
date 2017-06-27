@@ -26,7 +26,7 @@ public interface CustomerMapper
 	 * @param password
 	 * @return
 	 */
-    public CustomerPO getCustomerByPwd (@Param(value = "mobile") String mobile, 
+    public CustomerPO getCustomerByPwd (@Param(value = "loginAccount") String loginAccount, 
                                         @Param(value = "password") String password);
 
     
@@ -42,7 +42,7 @@ public interface CustomerMapper
 	 * @param mobile
 	 * @return
 	 */
-	public CustomerPO getCustomerByPhone ( String mobile );
+	public CustomerPO getCustomerByPhone ( String loginAccount );
 
 	/**
 	 * @author sc0tt insert into customer
@@ -79,7 +79,7 @@ public interface CustomerMapper
 	 * @param mobile
 	 * @return
 	 */
-	public int updateDeviceToken(@Param(value = "mobile") String mobile, @Param(value = "deviceToken") String deviceToken);
+	public int updateDeviceToken(@Param(value = "loginAccount") String loginAccount, @Param(value = "deviceToken") String deviceToken);
 	
 	
 	/**
@@ -154,7 +154,7 @@ public interface CustomerMapper
      * @param openId
      * @return
      */
-    public int clearWechatOpenId(@Param(value="mobile")String mobile,@Param(value="openId")String openId);
+    public int clearWechatOpenId(@Param(value="loginAccount")String loginAccount,@Param(value="openId")String openId);
     
     /**
      * 绑定微信
@@ -162,7 +162,7 @@ public interface CustomerMapper
      * @param openId
      * @return
      */
-    public int bindWechat(@Param(value="mobile")String mobile,@Param(value="openId")String openId);
+    public int bindWechat(@Param(value="loginAccount")String loginAccount,@Param(value="openId")String openId);
     
     /**
      * 获取总用户数

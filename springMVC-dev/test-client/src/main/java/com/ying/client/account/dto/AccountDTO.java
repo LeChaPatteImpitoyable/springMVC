@@ -12,15 +12,14 @@ public class AccountDTO implements Serializable {
 	private int id;
 	private String userName;
 	private String headerPath;
-	private String mobile;
+	private String account;
 	private String sex;
 	private String age; // birthday[string type, need modify]
 	private String registerDatatime;
 	private String loginDatatime;
-	private String customerType;
 	private String blacklist;
-	private String idStatus;
-	private int type;// 0用户 1会员
+	private int status;
+	private int roleNum;
 	public int getId() {
 		return id;
 	}
@@ -39,11 +38,17 @@ public class AccountDTO implements Serializable {
 	public void setHeaderPath(String headerPath) {
 		this.headerPath = headerPath;
 	}
-	public String getMobile() {
-		return mobile;
+	public String getAccount() {
+		return account;
 	}
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
+	public void setAccount(String account) {
+		this.account = account;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	public String getSex() {
 		return sex;
@@ -69,29 +74,17 @@ public class AccountDTO implements Serializable {
 	public void setLoginDatatime(String loginDatatime) {
 		this.loginDatatime = loginDatatime;
 	}
-	public String getCustomerType() {
-		return customerType;
-	}
-	public void setCustomerType(String customerType) {
-		this.customerType = customerType;
-	}
 	public String getBlacklist() {
 		return blacklist;
 	}
 	public void setBlacklist(String blacklist) {
 		this.blacklist = blacklist;
 	}
-	public String getIdStatus() {
-		return idStatus;
+	public int getRoleNum() {
+		return roleNum;
 	}
-	public void setIdStatus(String idStatus) {
-		this.idStatus = idStatus;
-	}
-	public int getType() {
-		return type;
-	}
-	public void setType(int type) {
-		this.type = type;
+	public void setRoleNum(int roleNum) {
+		this.roleNum = roleNum;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;

@@ -4,6 +4,7 @@ package com.ying.services.customer.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Service;
 
+import com.ying.common.util.XmenUtils;
 import com.ying.client.account.dto.AccountDTO;
 import com.ying.dao.mapper.CustomerMapper;
 import com.ying.dao.po.CustomerPO;
@@ -29,16 +30,14 @@ public class CustomerServiceImpl implements ICustomerService{
 		}
 		AccountDTO accountDTO = new AccountDTO();
 		accountDTO.setId(customerPO.getId());
-		accountDTO.setBlacklist(customerPO.getBlacklist());
-		accountDTO.setLoginDatatime(customerPO.getLoginDatatime());
-		accountDTO.setRegisterDatatime(customerPO.getRegisterDatatime());
+		accountDTO.setRegisterDatatime(XmenUtils.formatDate(customerPO.getCreateTime(), XmenUtils.DATE_FORMAT_SECONDS));
+		accountDTO.setLoginDatatime(XmenUtils.formatDate(customerPO.getLoginDatatime(), XmenUtils.DATE_FORMAT_SECONDS));
 		accountDTO.setUserName(customerPO.getUserName());
-		accountDTO.setMobile(customerPO.getMobile());
 		accountDTO.setAge(customerPO.getAge());
-		accountDTO.setCustomerType(customerPO.getCustomerType());
-		accountDTO.setIdStatus(customerPO.getIdStatus());
 		accountDTO.setSex(customerPO.getSex());
-		accountDTO.setType(customerPO.getType());
+		accountDTO.setRoleNum(customerPO.getRoleNum());
+		accountDTO.setAccount(customerPO.getLoginAccount());
+		accountDTO.setStatus(customerPO.getStatus());
 		return accountDTO;
 	}
 }
